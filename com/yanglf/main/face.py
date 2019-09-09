@@ -63,11 +63,13 @@ def base64_img(img_url):
     return img_base64
 
 
-img1_base64 = base64_img(r'D:\壁纸\美女\a88959a4-ae9f-11e9-b0ce-00155d6c7dc5.jpg')
+img1 = r'D:\壁纸\美女\a88959a4-ae9f-11e9-b0ce-00155d6c7dc5.jpg'
+img2 = r'D:\壁纸\美女\adca2c46-ae9f-11e9-9995-00155d6c7dc5.jpg'
+img1_base64 = base64_img(img1)
 ff1 = detect_face(img1_base64)
 rectangle1 = str(str(ff1['top']) + "," + str(ff1['left']) + "," + str(ff1['width']) + "," + str(ff1['height']))
 print('ff1:{}'.format(ff1))
-img2_base64 = base64_img(r'D:\壁纸\美女\微信图片_20190909113857.jpg')
+img2_base64 = base64_img(img2)
 ff2 = detect_face(img2_base64)
 rectangle2 = str(str(ff2['top']) + "," + str(ff2['left']) + "," + str(ff2['width']) + "," + str(ff2['height']))
 print('ff2:{}'.format(ff2))
