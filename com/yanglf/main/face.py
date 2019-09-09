@@ -48,6 +48,7 @@ def merge_face(template_base64,
     }
     merge_repo = requests.post(merge_url, data=data)
     merge_json = merge_repo.json()
+    print('merge_json:{}'.format(merge_json))
     result = merge_json['result']
     img_data = base64.b64decode(result)
     file = open(target_img, 'wb')
@@ -55,14 +56,19 @@ def merge_face(template_base64,
     file.close()
 
 
-f = open(r'D:\壁纸\美女\a88959a4-ae9f-11e9-b0ce-00155d6c7dc5.jpg', 'rb')
-image1 = base64.b64encode(f.read())
-f.close()
-ff1 = detect_face(image1)
+def base64_img(img_url):
+    file = open(img_url, 'rb')
+    img_base64 = base64.b64encode(file.read())
+    file.close()
+    return img_base64
+
+
+img1_base64 = base64_img(r'D:\壁纸\美女\a88959a4-ae9f-11e9-b0ce-00155d6c7dc5.jpg')
+ff1 = detect_face(img1_base64)
 rectangle1 = str(str(ff1['top']) + "," + str(ff1['left']) + "," + str(ff1['width']) + "," + str(ff1['height']))
-f = open(r'D:\壁纸\美女\微信图片_20190909113857.jpg', 'rb')
-image2 = base64.b64encode(f.read())
-f.close()
-ff2 = detect_face(image2)
+print('rectangle1:{}'.format(rectangle1))
+img2_base64 = base64_img(r'D:\壁纸\美女\微信图片_20190909113857.jpg')
+ff2 = detect_face(img2_base64)
 rectangle2 = str(str(ff2['top']) + "," + str(ff2['left']) + "," + str(ff2['width']) + "," + str(ff2['height']))
-merge_face(image1, rectangle1, image2, rectangle2, 100)
+print('rectangle2:{}'.format(rectangle2))
+merge_face(img1_base64, rectangle1, img2_base64, rectangle2, 100)
