@@ -5,6 +5,7 @@ import base64
 
 detect_url = 'https://api-cn.faceplusplus.com/facepp/v3/detect'
 merge_url = 'https://api-cn.faceplusplus.com/imagepp/v1/mergeface'
+beauty_url = 'https://api-cn.faceplusplus.com/facepp/v1/beautify'
 APK_KEY = 'hWhkHVmgzf66EYSDQGYAzJ5mWPjDUUo9'
 
 API_SECRET = 'MwMht-dGxgyS1kLoRYDp60sLZIpN4DM6'
@@ -50,6 +51,32 @@ def merge_face(template_base64,
     merge_json = merge_repo.json()
     print('merge_json:{}'.format(merge_json))
     result = merge_json['result']
+    img_data = base64.b64decode(result)
+    file = open(target_img, 'wb')
+    file.write(img_data)
+    file.close()
+
+
+'''
+ 磨皮  美颜
+'''
+
+
+def beautify_face(image_base64,
+                  whitening=100,
+                  smoothing=100,
+                  target_img=r'D:\壁纸\美女\beauty.jpg'):
+    data = {
+        'api_key': APK_KEY,
+        'api_secret': API_SECRET,
+        'image_base64': image_base64,
+        'whitening': whitening,
+        'smoothing': smoothing
+    }
+    beauty_repo = requests.post(beauty_url, data=data)
+    beauty_json = beauty_repo.json()
+    print('beauty_json:{}'.format(beauty_json))
+    result = beauty_json['result']
     img_data = base64.b64decode(result)
     file = open(target_img, 'wb')
     file.write(img_data)
